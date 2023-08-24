@@ -1,22 +1,14 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = ethers.parseEther("0.001");
-
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+  console.log("Deploying Inbox contract...")
+  const Inbox = await ethers.deployContract('Inbox', ["Ravindra"]);
+  await Inbox.waitForDeployment();
+  console.log("Inbox contract Deployed: ", await Inbox.getAddress())
+  console.log("Current msg value:", await Inbox.message());
+  console.log("upadintg message...");
+  await Inbox.setMessage("Ravindra Meena")
+  console.log("Updated msg value:", await Inbox.message());
 }
 
 // We recommend this pattern to be able to use async/await everywhere
