@@ -1,10 +1,14 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-require('./tasks/block-number')
-require("hardhat-gas-reporter")
+import "./tasks/block-number";
+import "hardhat-gas-reporter";
+import "@typechain/hardhat"
+import "hardhat-deploy"
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.21",
+  solidity: {
+    compilers: [{ version: "0.8.21" }, { version: "0.6.6" }]
+  },
   defaultNetwork: 'localhost',
   networks: {
     localhost: {
@@ -14,6 +18,11 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     enabled: true
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0
+    }
   }
 };
 
