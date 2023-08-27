@@ -4,6 +4,7 @@ pragma solidity ^0.8.21;
 // 2. Imports
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
+import "hardhat/console.sol";
 
 // 3. Interfaces, Libraries, Contracts
 error FundMe__NotOwner();
@@ -50,6 +51,7 @@ contract FundMe {
 
     /// @notice Funds our contract based on the ETH/USD price
     function fund() public payable {
+        console.log("Mumbai: ", msg.value);
         require(
             msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD,
             "You need to spend more ETH!"
